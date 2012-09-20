@@ -36,8 +36,6 @@ import com.sun.jersey.spi.template.ViewProcessor;
 /**
  * This class is an extension of the {@link ViewProcessor} API that provides support for Mustache templates.
  * @author Jason Rose
- * 
- * @see http://mustache.github.com/
  */
 @Provider
 @Singleton
