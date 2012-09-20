@@ -8,13 +8,15 @@ If you're using Guice, then you have flexibility in how the MustacheViewProcesso
 
 In the simplest fashion, just bind the processor as such:
 
-`bind(MustacheViewProcessor.class);`
+```
+bind(MustacheViewProcessor.class);
+```
 
 You can configure how the processor works, too, by overriding the defaults using more Guice bindings:
 
 ```
 bind(MustacheViewProcessor.class);
-bind(String.class).annotatedWith(Names.named(MustacheViewProcessor.GUICE_BINDING_TEMPLATE_PATTERN)).to(Pattern.compile("mustache/.*");
+bind(Pattern.class).annotatedWith(Names.named(MustacheViewProcessor.GUICE_BINDING_TEMPLATE_PATTERN)).to(Pattern.compile("mustache/.*");
 bind(String.class).annotatedWith(Names.named(MustacheViewProcessor.GUICE_BINDING_RESOURCE_BASE_PATH)).to("templates");
 ```
 
