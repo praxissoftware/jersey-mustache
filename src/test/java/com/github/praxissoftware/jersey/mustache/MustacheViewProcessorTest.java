@@ -17,6 +17,7 @@ package com.github.praxissoftware.jersey.mustache;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class MustacheViewProcessorTest {
 
   @Test
   public void render() throws IOException {
-    service = new MustacheViewProcessor("templates", ".*");
+    service = new MustacheViewProcessor("templates", Pattern.compile(".*"));
     final Mustache mustache = service.resolve("exists.mustache.txt");
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     final Viewable viewable = new Viewable("exists", ImmutableMap.of("msg", "world"));
@@ -48,22 +49,22 @@ public class MustacheViewProcessorTest {
 
   @Test
   public void testDoesntResolves() {
-    service = new MustacheViewProcessor("templates", ".*");
+    service = new MustacheViewProcessor("templates", Pattern.compile(".*"));
     Assert.assertNull(service.resolve("ponies.mustache.txt"));
   }
 
   @Test
   public void testRegexMatches() {
-    service = new MustacheViewProcessor("templates", "^existss?[.]mustache[.]txt$");
+    service = new MustacheViewProcessor("templates", Pattern.compile("^existss?[.]mustache[.]txt$"));
     Assert.assertNotNull(service.resolve("exists.mustache.txt"));
 
-    service = new MustacheViewProcessor("templates", "^existsssss?[.]mustache[.]txt$");
+    service = new MustacheViewProcessor("templates", Pattern.compile("^existsssss?[.]mustache[.]txt$"));
     Assert.assertNull(service.resolve("exists.mustache.txt"));
   }
 
   @Test
   public void testResolves() {
-    service = new MustacheViewProcessor("templates", ".*");
+    service = new MustacheViewProcessor("templates", Pattern.compile(".*"));
     Assert.assertNotNull(service.resolve("exists.mustache.txt"));
   }
 }

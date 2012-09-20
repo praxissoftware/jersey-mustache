@@ -21,6 +21,9 @@ import java.io.OutputStreamWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import javax.ws.rs.ext.Provider;
 
 import com.github.mustachejava.DefaultMustacheFactory;
@@ -37,23 +40,29 @@ import com.sun.jersey.spi.template.ViewProcessor;
  * @see http://mustache.github.com/
  */
 @Provider
+@Singleton
 public class MustacheViewProcessor implements ViewProcessor<Mustache> {
 
+  /** The Guice {@link Named} property to bind for the regex that any Mustache template must match. */
+  public static final String GUICE_BINDING_TEMPLATE_PATTERN = "mustacheViewProcessor.templatePattern";
+  /** The Guice {@link Named} property to bind for the root classloader resource path for template lookups. */
+  public static final String GUICE_BINDING_RESOURCE_BASE_PATH = "mustacheViewProcessor.resourceBasePath";
   private final MustacheFactory factory;
   private final Pattern templatePattern;
 
   public MustacheViewProcessor() {
-    this("templates", ".*[.]mustache.*");
+    this("templates", Pattern.compile(".*[.]mustache.*"));
   }
 
   /**
    * Generate a processor rooted at the specified path and matching the specified regex.
    * @param resourceBasePath The root of the classpath to begin searching at.
-   * @param templateRegex The regex that any template must match.
+   * @param templatePattern The regex that any template must match.
    */
-  public MustacheViewProcessor(final String resourceBasePath, final String templateRegex) {
+  @Inject
+  public MustacheViewProcessor(@Named(GUICE_BINDING_RESOURCE_BASE_PATH) final String resourceBasePath, @Named(GUICE_BINDING_TEMPLATE_PATTERN) final Pattern templatePattern) {
     factory = new DefaultMustacheFactory(resourceBasePath);
-    this.templatePattern = Pattern.compile(templateRegex);
+    this.templatePattern = templatePattern;
   }
 
   @Override
