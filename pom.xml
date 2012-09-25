@@ -56,7 +56,7 @@
   </developers>
 
   <properties>
-    <praxis.version>1.6.0-SNAPSHOT</praxis.version>
+    <praxis.version>1.6.0</praxis.version>
   </properties>
 
   <dependencyManagement>
