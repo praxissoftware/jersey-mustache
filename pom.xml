@@ -55,8 +55,12 @@
     </developer>
   </developers>
 
+  <prerequisites>
+    <maven>2.2.1</maven>
+  </prerequisites>
+
   <properties>
-    <praxis.version>1.6.0</praxis.version>
+    <praxis.version>1.7.0-SNAPSHOT</praxis.version>
   </properties>
 
   <dependencyManagement>
@@ -86,7 +90,7 @@
       <dependency>
         <groupId>com.github.spullara.mustache.java</groupId>
         <artifactId>compiler</artifactId>
-        <version>0.8.6</version>
+        <version>0.8.8</version>
       </dependency>
 
       <dependency>
@@ -160,7 +164,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.3.2</version>
+          <version>2.5.1</version>
           <configuration>
             <source>1.6</source>
             <target>1.6</target>
