@@ -29,6 +29,7 @@ import javax.ws.rs.ext.Provider;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.google.common.base.CharMatcher;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import com.sun.jersey.api.view.Viewable;
 import com.sun.jersey.spi.template.ViewProcessor;
@@ -70,10 +71,13 @@ public class MustacheViewProcessor implements ViewProcessor<Mustache> {
     if( !matcher.matches() ) {
       return null;
     }
+    
+    // Trim the leading slash because the factory appends a slash to the base resource path.
+    final String formattedName = CharMatcher.anyOf("/").trimLeadingFrom(name);
 
     // Try to load from the classloader.
     try {
-      return factory.compile(name);
+      return factory.compile(formattedName);
     } catch( final UncheckedExecutionException uee ) {
       return null;
     }
