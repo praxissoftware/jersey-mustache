@@ -19,22 +19,26 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
+import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableMap;
 import com.sun.jersey.api.view.Viewable;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 public class MustacheViewProcessorTest {
 
   private MustacheViewProcessor service;
+  
+  private MustacheFactory factory;
 
   @Test
   public void render() throws IOException {
-    service = new MustacheViewProcessor("templates", Pattern.compile(".*"));
+    service = new MustacheViewProcessor();
     final Mustache mustache = service.resolve("exists.mustache.txt");
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     final Viewable viewable = new Viewable("exists", ImmutableMap.of("msg", "world"));
@@ -45,26 +49,27 @@ public class MustacheViewProcessorTest {
   @Before
   public void setUp() {
     service = new MustacheViewProcessor();
+    factory = new DefaultMustacheFactory("templates"); 
   }
 
   @Test
   public void testDoesntResolves() {
-    service = new MustacheViewProcessor("templates", Pattern.compile(".*"));
+    service = new MustacheViewProcessor();
     Assert.assertNull(service.resolve("ponies.mustache.txt"));
   }
 
   @Test
   public void testRegexMatches() {
-    service = new MustacheViewProcessor("templates", Pattern.compile("^existss?[.]mustache[.]txt$"));
+    service = new MustacheViewProcessor(factory, Pattern.compile("^existss?[.]mustache[.]txt$"));
     Assert.assertNotNull(service.resolve("exists.mustache.txt"));
 
-    service = new MustacheViewProcessor("templates", Pattern.compile("^existsssss?[.]mustache[.]txt$"));
+    service = new MustacheViewProcessor(factory, Pattern.compile("^existsssss?[.]mustache[.]txt$"));
     Assert.assertNull(service.resolve("exists.mustache.txt"));
   }
 
   @Test
   public void testResolves() {
-    service = new MustacheViewProcessor("templates", Pattern.compile(".*"));
+    service = new MustacheViewProcessor(factory, Pattern.compile(".*"));
     Assert.assertNotNull(service.resolve("exists.mustache.txt"));
   }
 }
