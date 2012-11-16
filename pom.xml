@@ -60,7 +60,7 @@
   </prerequisites>
 
   <properties>
-    <praxis.version>1.7.0-SNAPSHOT</praxis.version>
+    <praxis.version>1.7.0</praxis.version>
   </properties>
 
   <dependencyManagement>
