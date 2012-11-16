@@ -27,7 +27,7 @@
 
   <groupId>com.github.praxissoftware</groupId>
   <artifactId>com.github.praxissoftware.jersey-mustache</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 
   <name>Praxis Software - Jersey-Mustache</name>
   <description>This is a high-performance, caching, configurable ViewProcessor backed by Mustache.java.</description>
@@ -55,8 +55,12 @@
     </developer>
   </developers>
 
+  <prerequisites>
+    <maven>2.2.1</maven>
+  </prerequisites>
+
   <properties>
-    <praxis.version>1.6.0</praxis.version>
+    <praxis.version>1.7.0</praxis.version>
   </properties>
 
   <dependencyManagement>
@@ -86,15 +90,15 @@
       <dependency>
         <groupId>com.github.spullara.mustache.java</groupId>
         <artifactId>compiler</artifactId>
-        <version>0.8.6</version>
+        <version>0.8.8</version>
       </dependency>
 
       <dependency>
-        <groupId>javax.inject</groupId>
-        <artifactId>javax.inject</artifactId>
-        <version>1</version>
-        <scope>provided</scope>
+        <groupId>com.google.inject</groupId>
+        <artifactId>guice</artifactId>
+        <version>3.0</version>
       </dependency>
+      
     </dependencies>
   </dependencyManagement>
 
@@ -110,8 +114,8 @@
     </dependency>
 
     <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
     </dependency>
 
     <dependency>
@@ -160,7 +164,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.3.2</version>
+          <version>2.5.1</version>
           <configuration>
             <source>1.6</source>
             <target>1.6</target>

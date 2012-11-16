@@ -6,18 +6,16 @@ I like to use [mustache](https://github.com/mustache) as a templating language. 
 ### How to Integrate Using Guice
 If you're using Guice, then you have flexibility in how the MustacheViewProcessor works.
 
-In the simplest fashion, just bind the processor as such:
+In the simplest fashion, just install the module while creating your injector:
 
 ```
-bind(MustacheViewProcessor.class);
+new JerseyMustacheModule.Builder().build()
 ```
 
-You can configure how the processor works, too, by overriding the defaults using more Guice bindings:
+You can configure how the processor works, too, by overriding the defaults using the builder pattern on the module:
 
 ```
-bind(MustacheViewProcessor.class);
-bind(Pattern.class).annotatedWith(Names.named(MustacheViewProcessor.GUICE_BINDING_TEMPLATE_PATTERN)).to(Pattern.compile("mustache/.*");
-bind(String.class).annotatedWith(Names.named(MustacheViewProcessor.GUICE_BINDING_RESOURCE_BASE_PATH)).to("templates");
+new JerseyMustacheModule.Builder().factory(myFancyFactory).regex(mySuperRegex).build()
 ```
 
 ### How to Integrate Without Guice

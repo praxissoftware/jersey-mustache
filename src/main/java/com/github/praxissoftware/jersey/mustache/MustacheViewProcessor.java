@@ -29,6 +29,7 @@ import javax.ws.rs.ext.Provider;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.google.common.base.CharMatcher;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import com.sun.jersey.api.view.Viewable;
 import com.sun.jersey.spi.template.ViewProcessor;
@@ -41,25 +42,21 @@ import com.sun.jersey.spi.template.ViewProcessor;
 @Singleton
 public class MustacheViewProcessor implements ViewProcessor<Mustache> {
 
-  /** The Guice {@link Named} property to bind for the regex that any Mustache template must match. */
-  public static final String GUICE_BINDING_TEMPLATE_PATTERN = "mustacheViewProcessor.templatePattern";
-  /** The Guice {@link Named} property to bind for the root classloader resource path for template lookups. */
-  public static final String GUICE_BINDING_RESOURCE_BASE_PATH = "mustacheViewProcessor.resourceBasePath";
   private final MustacheFactory factory;
   private final Pattern templatePattern;
 
   public MustacheViewProcessor() {
-    this("templates", Pattern.compile(".*[.]mustache.*"));
+    this(new DefaultMustacheFactory("templates"), Pattern.compile(".*[.]mustache.*"));
   }
 
   /**
    * Generate a processor rooted at the specified path and matching the specified regex.
-   * @param resourceBasePath The root of the classpath to begin searching at.
+   * @param factory The MustacheFactory to use for template loading and compilation.
    * @param templatePattern The regex that any template must match.
    */
   @Inject
-  public MustacheViewProcessor(@Named(GUICE_BINDING_RESOURCE_BASE_PATH) final String resourceBasePath, @Named(GUICE_BINDING_TEMPLATE_PATTERN) final Pattern templatePattern) {
-    factory = new DefaultMustacheFactory(resourceBasePath);
+  public MustacheViewProcessor(@Named("praxis.mustache.factory") final MustacheFactory factory, @Named("praxis.mustache.regex") final Pattern templatePattern) {
+    this.factory = factory;
     this.templatePattern = templatePattern;
   }
 
@@ -70,10 +67,13 @@ public class MustacheViewProcessor implements ViewProcessor<Mustache> {
     if( !matcher.matches() ) {
       return null;
     }
+    
+    // Trim the leading slash because the factory appends a slash to the base resource path.
+    final String formattedName = CharMatcher.anyOf("/").trimLeadingFrom(name);
 
     // Try to load from the classloader.
     try {
-      return factory.compile(name);
+      return factory.compile(formattedName);
     } catch( final UncheckedExecutionException uee ) {
       return null;
     }
