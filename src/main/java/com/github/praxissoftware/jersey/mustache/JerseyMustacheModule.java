@@ -50,7 +50,7 @@ public class JerseyMustacheModule extends AbstractModule {
     private Pattern regex;
 
     public Builder() {
-      this.factory = new DefaultMustacheFactory("/templates");
+      this.factory = new DefaultMustacheFactory("templates");
       this.regex = Pattern.compile(".*[.]mustache.*");
     }
 
