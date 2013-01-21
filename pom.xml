@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2012 Jason Rose <jasoncrose@gmail.com>
+    Copyright (C) 2013 Jason Rose <jasoncrose@gmail.com>
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@
   </prerequisites>
 
   <properties>
-    <praxis.version>1.7.0</praxis.version>
+    <praxis.version>1.8.0</praxis.version>
   </properties>
 
   <dependencyManagement>
@@ -146,7 +146,7 @@
             </includes>
             <useDefaultExcludes>false</useDefaultExcludes>
             <properties>
-              <year>2012</year>
+              <year>2013</year>
               <email>jasoncrose@gmail.com</email>
             </properties>
           </configuration>
