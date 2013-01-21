@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 Jason Rose <jasoncrose@gmail.com>
+ * Copyright (C) 2013 Jason Rose <jasoncrose@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ public class JerseyMustacheModule extends AbstractModule {
     private Pattern regex;
 
     public Builder() {
-      this.factory = new DefaultMustacheFactory("/templates");
+      this.factory = new DefaultMustacheFactory("templates");
       this.regex = Pattern.compile(".*[.]mustache.*");
     }
 
