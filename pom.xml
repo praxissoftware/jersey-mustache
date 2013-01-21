@@ -27,7 +27,7 @@
 
   <groupId>com.github.praxissoftware</groupId>
   <artifactId>com.github.praxissoftware.jersey-mustache</artifactId>
-  <version>1.3.0</version>
+  <version>1.4.0-SNAPSHOT</version>
 
   <name>Praxis Software - Jersey-Mustache</name>
   <description>This is a high-performance, caching, configurable ViewProcessor backed by Mustache.java.</description>
